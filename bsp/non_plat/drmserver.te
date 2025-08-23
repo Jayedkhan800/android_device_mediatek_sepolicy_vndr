@@ -52,10 +52,6 @@ allow drmserver mediaserver:fifo_file write;
 # Purpose : for device bring up, not to block early migration/sanity
 allow drmserver system_app:process getattr;
 
-# Date : WK15.34allow drmserver system_app:file { read open getattr };
-
-# Mediaserver to drmserver
-allow drmserver mediaserver:dir search;
 # Operation : Play Ready IT
 # Purpose : Allow access to link file; Such as play ready will request
 #           drmserver to access /mnt/sdcard/xxx, which links to /sdcard/xxx.
@@ -68,9 +64,6 @@ allow drmserver storage_file:lnk_file read;
 # Operation : Migration
 # Purpose : Allow drmserver to access some system_server opreration on M
 #           and allow drmserver access file stored in sdcard
-allow system_server drmserver_service:service_manager find;
-allow system_server drmserver:binder { call transfer };
-allow drmserver system_server:binder { call transfer };
 allow drmserver system_server:file getattr;
 allow system_server drmserver:drmservice openDecryptSession;
 
