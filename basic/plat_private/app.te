@@ -6,3 +6,27 @@
 # Operation : Migration
 # Purpose : appdomain need get system_mtk_amslog_prop
 get_prop(appdomain, system_mtk_amslog_prop)
+
+# Purpose : support power-off alarm (PowerOffAlarm.apk)
+type power_off_alarm, domain, coredomain, mlstrustedsubject;
+app_domain(power_off_alarm)
+allow power_off_alarm app_api_service:service_manager find;
+allow power_off_alarm system_app_data_file:dir create_dir_perms;
+allow power_off_alarm system_app_data_file:{ file lnk_file } create_file_perms;
+allow power_off_alarm alarm_device:chr_file rw_file_perms;
+allow power_off_alarm rtc_device:chr_file rw_file_perms;
+
+# Purpose : MIUI camera (MiuiCamera.apk)
+type miuicamera_app, domain, coredomain;
+app_domain(miuicamera_app)
+net_domain(miuicamera_app)
+allow miuicamera_app {
+    app_api_service
+    audioserver_service
+    cameraserver_service
+    mediaextractor_service
+    mediametrics_service
+    mediaserver_service
+}:service_manager find;
+dontaudit miuicamera_app radio_service:service_manager find;
+allow miuicamera_app privapp_data_file:file execute;
